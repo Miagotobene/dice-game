@@ -1,0 +1,12 @@
+:root{
+    --bs-font-sans-serif: "Rubik", "sans-serif";
+}
+
+.container-xxl{
+    max-width: 1530px;
+}
+
+body {
+    background-image: url('/imgs/i-like-food.svg');
+    background-color: rgba(243,243,243);
+}
