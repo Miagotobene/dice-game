@@ -1,8 +1,13 @@
 # import libraries and files here.
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from rest_framework import generics
 from .models import Artist, Song
 from .forms import ArtistForm
 from .forms import SongForm
+from .serializers import ArtistSerializer
+from .serializers import SongSerializer
+
 
 
 # Create your views for the artist model.
@@ -82,3 +87,30 @@ def artist_delete(request, pk):
 def song_delete(request, pk):
     Song.objects.get(id=pk).delete()
     return redirect('song_list')
+
+# API: artist
+def artist_list(request):
+    data = {
+        'name': 'Funkadelic',
+        'photo_url': 'https://media1.fdncms.com/orlando/imager/u/original/10862750/screen_shot_2018-02-16_at_1.16.25_pm.png',
+        'nationality': 'USA'
+    }
+    return JsonResponse(data)
+
+
+class ArtistList(generics.ListCreateAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
+
+class ArtistDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
+
+# API: song
+class SongList(generics.ListCreateAPIView):
+    queryset = Song.objects.all()
+    serializer_class = SongSerializer
+
+class SongDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Song.objects.all()
+    serializer_class = SongSerializer

@@ -1,6 +1,7 @@
 # tunr/urls.py
-from django.urls import path
+from django.urls import path, include
 from . import views
+from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
     # path for the artist model
@@ -16,6 +17,14 @@ urlpatterns = [
     path('songs/new', views.song_create, name='song_create'),
     path('songs/<int:pk>/edit', views.song_edit, name='song_edit'),
     path('songs/<int:pk>/delete', views.song_delete, name='song_delete'),
-    
 
+    # API: artist
+    path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
+    path('artists/', views.ArtistList.as_view(), name='artist_list'),
+    path('artists/<int:pk>', views.ArtistDetail.as_view(), name='artist_detail'),
+
+
+     # API: song
+    path('songs/', views.SongList.as_view(), name='song_list'),
+    path('songs/<int:pk>', views.SongDetail.as_view(), name='song_detail'),
 ]
